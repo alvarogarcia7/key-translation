@@ -10,6 +10,8 @@
             [clojure.string :refer [trim]]))
 
 (def events (atom {}))
+(defn- add-to [storage payload]
+  (swap! storage merge @storage payload))
 
 (defn- route-param [context var-name]
   (get-in context [:request :route-params var-name]))
@@ -66,8 +68,7 @@
            ;;(def ctx context)
            ;;(if event-file (upload-file "event" event-file))
            ;;(if id-file (upload-file "id" id-file))
-            (swap! events merge @events event-by-tenant)
-              ))
+           (add-to events event-by-tenant)))
   :handle-created (fn [_] (generate-string @events))
   :available-media-types ["application/json"])
 
