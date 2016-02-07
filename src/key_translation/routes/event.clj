@@ -33,7 +33,7 @@
               (process-row [row]
                 (-> [(select- row 1)  (select- row 2)]))]
 
-      (let [contents (doall (csv/read-csv in-file))]
+      (let [contents (csv/read-csv in-file)]
         (->> contents
           (map process-row)
           (into {}))))))
