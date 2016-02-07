@@ -6,7 +6,8 @@
             [liberator.core :refer [defresource resource request-method-in]]
             [clojure.data.csv :as csv]
             [clojure.java.io :as io]
-            [clojure.java.io :refer [copy make-parents]]))
+            [clojure.java.io :refer [copy make-parents]]
+            [clojure.string :refer [trim]]))
 
 (def events (atom {}))
 
@@ -28,7 +29,7 @@
 (defn update-event [filename]
   (with-open [in-file (io/reader filename)]
     (letfn [(process-row [row]
-                       (-> [(clojure.string/trim (second row))  (clojure.string/trim (nth row 2))]))]
+                       (-> [(trim (second row))  (trim (nth row 2))]))]
 
       (let [contents (doall (csv/read-csv in-file))]
         (->> contents
