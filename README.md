@@ -33,6 +33,7 @@ Can be used in an embedded server or deployed to an application server
 ### Manual
 
  * Start the server (see Deployment)
+ * Set up the environment: ``export SRV="localhost:3000"``
  * Load data with POST requests
  * Query data with GET requests
 
@@ -42,13 +43,13 @@ Sample POST with cURL (see tests):
 curl 
     --form "event=@dev-resources/vc.csv" \
     --form "id=@dev-resources/vc.csv" \
-    -X POST localhost:3000/tenants/1003/events/23
+    -X POST $SRV/tenants/1003/events/23
 ```
 
 Sample GET with cURL (see tests):
 
 ```bash
-curl -X GET localhost:3000/tenants/1003/events/010100120001
+curl -X GET $SRV/tenants/1003/events/010100120001
 # 2649abbb5522855870d200cbbd5488a6
 ```
 
