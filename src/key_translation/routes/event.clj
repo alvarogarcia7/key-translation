@@ -28,17 +28,20 @@
                         (get-in @events [tenant-id event])))
   :available-media-types ["application/json"])
 
-(defn update-event [filename]
+(defn- open-file [filename]
   (with-open [in-file (io/reader filename)]
+      (csv/read-csv in-file)))
+
+(defn update-event [filename]
     (letfn [(select- [row indx]
                 (trim (nth row indx)))
               (process-row [row]
                 (-> [(select- row 1)  (select- row 2)]))]
 
-      (let [contents (csv/read-csv in-file)]
+      (let [contents (open-file filename)]
         (->> contents
           (map process-row)
-          (into {}))))))
+          (into {})))))
 
 (defn- csv-tempfile [filename]
  (java.io.File/createTempFile filename ".csv"))
