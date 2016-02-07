@@ -35,12 +35,15 @@
         (map process-row)
         (into {}))))))
 
+(defn- csv-tempfile [filename]
+ (java.io.File/createTempFile filename ".csv"))
+
 
 (defn upload-file [tenant-id folder file]
   (let [file-name (file :filename)
          size (file :size)
          actual-file (file :tempfile)
-         destination (format "C:/tmp/%s/%s/%s" tenant-id folder file-name)]
+         destination (csv-tempfile (format "%s-%s-%s" tenant-id folder file-name))]
          (make-parents destination)
        (copy actual-file (File. destination))))
 
