@@ -28,8 +28,10 @@
 
 (defn update-event [filename]
   (with-open [in-file (io/reader filename)]
-    (letfn [(process-row [row]
-                       (-> [(trim (second row))  (trim (nth row 2))]))]
+    (letfn [(select- [row indx]
+                (trim (nth row indx)))
+              (process-row [row]
+                (-> [(select- row 1)  (select- row 2)]))]
 
       (let [contents (doall (csv/read-csv in-file))]
         (->> contents
