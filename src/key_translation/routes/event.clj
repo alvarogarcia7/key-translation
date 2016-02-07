@@ -26,14 +26,14 @@
   :available-media-types ["application/json"])
 
 (defn update-event [filename]
-(with-open [in-file (io/reader filename)]
-  (letfn [(process-row [row]
-                     (-> [(clojure.string/trim (second row))  (clojure.string/trim (nth row 2))]))]
+  (with-open [in-file (io/reader filename)]
+    (letfn [(process-row [row]
+                       (-> [(clojure.string/trim (second row))  (clojure.string/trim (nth row 2))]))]
 
-    (let [contents (doall (csv/read-csv in-file))]
-      (->> contents
-        (map process-row)
-        (into {}))))))
+      (let [contents (doall (csv/read-csv in-file))]
+        (->> contents
+          (map process-row)
+          (into {}))))))
 
 (defn- csv-tempfile [filename]
  (java.io.File/createTempFile filename ".csv"))
