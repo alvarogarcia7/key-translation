@@ -26,7 +26,31 @@ Can be used in an embedded server or deployed to an application server
 
 ## Tests
 
+### Automated 
+
 ``lein test``
+
+### Manual
+
+ * Start the server (see Deployment)
+ * Load data with POST requests
+ * Query data with GET requests
+
+Sample POST with cURL (see tests):
+
+```bash
+curl 
+    --form "event=@dev-resources/vc.csv" \
+    --form "id=@dev-resources/vc.csv" \
+    -X POST localhost:3000/tenants/1003/events/23
+```
+
+Sample GET with cURL (see tests):
+
+```bash
+curl -X GET localhost:3000/tenants/1003/events/010100120001
+# 2649abbb5522855870d200cbbd5488a6
+```
 
 ## Notes
 
